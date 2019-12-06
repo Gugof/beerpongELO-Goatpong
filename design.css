@@ -1,0 +1,83 @@
+.bereichfuss {
+    text-align: center;
+    background-image: linear-gradient(#444, #222);
+}
+
+
+
+div[data-role="page"] {
+	background-color: #0f0f0f;
+}
+
+.bildiminhalt {
+    width: 100%;
+    height: 100%;
+}
+
+#Gamelog {
+	background-image: url(bilder/beerpongpic.jpg);
+	background-size:cover;
+	background-position: center;
+}
+
+#startseite {
+    background-image: url(bilder/beerpongpic.jpg);
+    background-size:cover;
+    background-position:  bottom left;
+}
+#Rangliste {
+    background-image: url(bilder/beerpongpic.jpg);
+    background-size:cover;
+    background-position: center;
+}
+
+#Spielen {
+    background-image: url(bilder/beerpongpic.jpg);
+    background-size:cover;
+    background-position: bottom left;
+}
+
+th {
+    border-bottom: 2px solid #333;
+    background-color: #333;
+    color: silver;
+}
+
+tr:nth-child(even) {
+    background-color: hsla(0, 90%, 0%, .8);
+    border-bottom: 1px solid #333;
+}
+
+tr:nth-child(odd) {
+    background-color: hsla(0, 50%, 0%, .4);
+    border-bottom: 1px solid #333;
+}
+
+audio {
+    width: 100%;
+}
+
+
+#einlogformular input {
+	border: #999 solid 1px;
+}
+
+.tabellentext {
+    vertical-align: middle !important;
+}
+
+#details p {
+    font-size: 150%;
+}
+
+i {
+    font-size: 70%;
+    color: #aaa !important;
+    font-variant: normal;
+}
+
+#buttons_details {
+   text-align: right;
+}
+
+

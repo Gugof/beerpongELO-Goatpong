@@ -64,18 +64,22 @@ require_once('db.php');
     var Player1_ID;
     var Player1;
     var Player1ELO;
+    //var Player1BestELO;
 
     var Player2_ID ;
     var Player2;
-    var Player2ELO  ;
+    var Player2ELO;
+    //var Player2BestELO;
 
     var Player3_ID ;
     var Player3 ;
-    var Player3ELO  ;
+    var Player3ELO;
+    //var Player3BestELO;
 
     var Player4_ID ;
     var Player4 ;
-    var Player4ELO  ;
+    var Player4ELO;
+    //var Player4BestELO;
 
     var T1ELO;
     var T2ELO;
@@ -108,10 +112,15 @@ require_once('db.php');
 
        
 	<div data-role="controlgroup" data-type="horizontal">
-		<a href="#Rangliste" class="ui-btn">Rangliste</a>
         <input id="btn_spielen" type="submit" name="btn_spielen" onclick="spielen();" value="Spielen"/>
 		<a href="#turniermodus" class="ui-btn">Turniermodus</a>
 	</div>
+
+      <div data-role="controlgroup" data-type="horizontal">
+          <a href="#Rangliste" class="ui-btn">Rangliste</a>
+
+          <a href="#Allespieler" class="ui-btn">Alle Spieler</a>
+      </div>
 
       <div data-role="controlgroup" data-type="horizontal">
           <a href="#Gamelog" class="ui-btn">SpieleLog</a>
@@ -413,10 +422,10 @@ require_once('db.php');
     </script>
 </div>
 
-<!-- Hier kommt die Rangliste -->
+<!-- Hier kommen Allepspieler -->
 
 <?php
-$sql = "SELECT * FROM player";
+$sql = "SELECT * FROM player ORDER BY ELO DESC";
 if ($erg = $db->query($sql)) {
     while ($datensatz = $erg->fetch_object()) {
         $daten[] = $datensatz;
@@ -424,10 +433,10 @@ if ($erg = $db->query($sql)) {
 }
 ?>
 
-<div data-role="page" id="Rangliste" data-theme="b">
+<div data-role="page" id="Allespieler" data-theme="b">
   <?php anzeige_kopfbereich('Rangliste'); ?>
   <div data-role="main" class="ui-content">
-    <h1>Rangliste</h1>
+    <h1>Alle Spieler</h1>
       <p>Hier kann man nach allen Spielern suchen. Es werden Statistiken wie z.B. Siege, ELO, Treffer und Gewinnquote angezeigt.</p>
       <p>Außerdem kann man Spieler hinzufügen und löschen. Dies ist passwortgeschützt und nur Admins vorenthalten.</p>
 
@@ -459,10 +468,10 @@ if ($erg = $db->query($sql)) {
             searching: false,
 
         } );
-        $('#rankTable').DataTable( {
+        $('#allTable').DataTable( {
             paging: false
         } );
-        $('#rankTable').DataTable();
+        $('#allTable').DataTable();
 
     } );
 $(document).ready(function() {		
@@ -540,33 +549,31 @@ $(document).ready(function() {
 
 
 </script>
-
-		
 	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-      <table id="rankTable" data-role="table" class="ui-responsive" data-mode="reflow" data-column-btn-text="Spalten" >
+      <table id="allTable" data-role="table" class="ui-responsive" data-mode="reflow" data-column-btn-text="Spalten" >
       <thead>
         <tr>
-          <th data-priority="1">ID</th>
+
           <th data-priority="1">Name</th>
           <th data-priority="1">ELO</th>
 		  <th data-priority="1">Games Played</th>
           <th data-priority="1">Win</th>
           <th data-priority="1">Win/Lose</th>
+          
           <th data-priority="1">Treffer</th>
 		  <th data-priority="1">Gegentreffer</th>
           <th data-priority="1">T/GT</th>
+          <th data-priority="1">ID</th>
 
         </tr>
       </thead>
       <tbody>
 
     <?php
+    $count = 1;
     foreach ($daten as $inhalt) {
     ?>
         <tr>
-            <td class="tabellentext">
-                <?php echo $inhalt->ID; ?>
-            </td>
             <td class="tabellentext">
                 <?php echo $inhalt->Name; ?>
             </td>
@@ -590,6 +597,8 @@ $(document).ready(function() {
 
                 echo ''.$WL.'%'; ?>
             </td>
+
+
             <td class="tabellentext">
                 <?php echo $inhalt->Treffer; ?>
             </td>
@@ -603,6 +612,9 @@ $(document).ready(function() {
                 if($TGT >= 0){echo '+'.$TGT.'';}
                 else{echo ''.$TGT.'';}
                 ?>
+            </td>
+            <td class="tabellentext">
+                <?php echo $inhalt->ID; ?>
             </td>
       </tr>
     <?php
@@ -621,7 +633,7 @@ $(document).ready(function() {
 		var input, filter, table, tr, td, i, txtValue;
 		input = document.getElementById("myInput");
 		filter = input.value.toUpperCase();
-		table = document.getElementById("rankTable");
+		table = document.getElementById("allTable");
 		tr = table.getElementsByTagName("tr");
 
 		// Loop through all table rows, and hide those who don't match the search query
@@ -641,6 +653,136 @@ $(document).ready(function() {
 
   </div>
   
+</div>
+<!-- Hier kommt die Rangliste -->
+
+<?php
+$sqlrang = "SELECT * FROM player WHERE Games > 5 ORDER BY ELO DESC ";
+if ($ergrang = $db->query($sqlrang)) {
+    while ($datensatzrang = $ergrang->fetch_object()) {
+        $datenrang[] = $datensatzrang;
+    }
+}
+?>
+
+<div data-role="page" id="Rangliste" data-theme="b">
+    <?php anzeige_kopfbereich('Rangliste'); ?>
+    <div data-role="main" class="ui-content">
+        <h1>Rangliste</h1>
+        <p>Hier ist die Rangliste für alle eingestuften Spieler</p>
+        <p>Um ihr aufzutauchen muss man mindestens 5 Spiele gespielt haben.</p>
+
+
+
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+        <table id="rankTable" data-role="table" class="ui-responsive" data-mode="reflow" data-column-btn-text="Spalten" >
+            <thead>
+            <tr>
+                <th data-priority="1">Rang</th>
+                <th data-priority="1">Name</th>
+                <th data-priority="1">ELO</th>
+                <th data-priority="1">Games Played</th>
+                <th data-priority="1">Win</th>
+                <th data-priority="1">Win/Lose</th>
+
+                <th data-priority="1">Treffer</th>
+                <th data-priority="1">Gegentreffer</th>
+                <th data-priority="1">T/GT</th>
+                <th data-priority="1">ID</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php
+            $countrang = 1;
+            foreach ($datenrang as $inhaltrang) {
+                ?>
+                <tr>
+                    <td class="tabellentext">
+                        <?php echo $countrang;
+                        $countrang++; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->Name; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->ELO; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->Games; ?>
+                    </td>
+
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->Win; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php
+
+                        if($inhaltrang->Games == 0){
+                            $WLrang = 0;
+                        }
+                        else{$WLrang = round(($inhaltrang->Win / $inhaltrang->Games) * 100); }
+
+                        echo ''.$WLrang.'%'; ?>
+                    </td>
+
+
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->Treffer; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->Gegentreffer; ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php
+
+                        $TGTrang = $inhaltrang->Treffer - $inhaltrang->Gegentreffer;
+                        if($TGTrang >= 0){echo '+'.$TGTrang.'';}
+                        else{echo ''.$TGTrang.'';}
+                        ?>
+                    </td>
+                    <td class="tabellentext">
+                        <?php echo $inhaltrang->ID; ?>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+
+            </tbody>
+        </table>
+
+        <script>
+
+
+            function myFunction() {
+                // Declare variables
+
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("rankTable");
+                tr = table.getElementsByTagName("tr");
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+    </div>
+
 </div>
 
 <!-- Hier kommt die Auslosung -->
@@ -961,7 +1103,8 @@ if ($erg2 = $db->query($sql2)) {
 
                 // Auf eine Antwort warten
                 xhr.onreadystatechange = function() {
-                    document.getElementById("ELOP1").innerHTML = xhr.responseText;
+
+                    document.getElementById("ELOP1").innerHTML =  xhr.responseText;
                     let ELOP1_1_int = Number(document.getElementById("ELOP1").textContent);
                     let ELOP2_1_int = Number(document.getElementById("ELOP2").textContent);
                     let ELO_Combined = Math.round((ELOP2_1_int + ELOP1_1_int) /2);
@@ -987,7 +1130,7 @@ if ($erg2 = $db->query($sql2)) {
                         // Auf eine Antwort warten
                         xhr.onreadystatechange = function() {
 
-                            document.getElementById("ELOP2").innerHTML = xhr.responseText;
+                            document.getElementById("ELOP2").innerHTML =xhr.responseText;
                             let ELOP2_1_int = Number(document.getElementById("ELOP2").textContent);
                             let ELOP1_1_int = Number(document.getElementById("ELOP1").textContent);
                             let ELO_Combined = Math.round((ELOP2_1_int + ELOP1_1_int) / 2);
@@ -1234,6 +1377,92 @@ if ($erg2 = $db->query($sql2)) {
                 if(T1.value == 10 || T2.value == 10 )
                 {
 
+                    //----- GET BEST ELO -----//
+
+                    //Player1//
+                    // Ein XMLHTTP-Request-Objekt erzeugen.
+                    /*var xhrP1 = new XMLHttpRequest();
+
+
+                    // XMLHTTP-Request zur Datei: antwort.php öffnen und den Suchbegriff anhängen.
+                    xhrP1.open("GET", "getBestELO.php?ELObest=" + ID1_1, true);
+
+                    // XMLHTTP-Request senden.
+                    xhrP1.send();
+
+                    // Auf eine Antwort warten
+                    xhrP1.onreadystatechange = function() {
+
+                        Player1BestELO = xhrP1.responseText;
+                        alert(Player1BestELO);
+                        //Player1BestELO = Player1BestELO.replace('<p>','');
+                        //Player1BestELO = Player1BestELO.replace('</p>','');
+
+
+                    }
+
+                    //Player2//
+                    // Ein XMLHTTP-Request-Objekt erzeugen.
+                    var xhrP2 = new XMLHttpRequest();
+
+
+                    // XMLHTTP-Request zur Datei: antwort.php öffnen und den Suchbegriff anhängen.
+                    xhrP2.open("GET", "getBestELO.php?ELObest=" + ID2_1, true);
+
+                    // XMLHTTP-Request senden.
+                    xhrP2.send();
+
+                    // Auf eine Antwort warten
+                    xhrP2.onreadystatechange = function() {
+
+                        Player2BestELO = xhrP2.responseText;
+                        //Player2BestELO = Player2BestELO.replace('<p>','');
+                        //Player2BestELO = Player2BestELO.replace('</p>','');
+
+                    }
+
+                    //Player3//
+                    // Ein XMLHTTP-Request-Objekt erzeugen.
+                    var xhrP3 = new XMLHttpRequest();
+
+
+                    // XMLHTTP-Request zur Datei: antwort.php öffnen und den Suchbegriff anhängen.
+                    xhrP3.open("GET", "getBestELO.php?ELObest=" + ID3_2, true);
+
+                    // XMLHTTP-Request senden.
+                    xhrP3.send();
+
+                    // Auf eine Antwort warten
+                    xhrP3.onreadystatechange = function() {
+
+                        Player3BestELO = xhrP3.responseText;
+                        //Player3BestELO = Player3BestELO.replace('<p>','');
+                        //Player3BestELO = Player3BestELO.replace('</p>','');
+
+                    }
+
+                    //Player4//
+                    // Ein XMLHTTP-Request-Objekt erzeugen.
+                    var xhrP4 = new XMLHttpRequest();
+
+
+                    // XMLHTTP-Request zur Datei: antwort.php öffnen und den Suchbegriff anhängen.
+                    xhrP4.open("GET", "getBestELO.php?ELObest=" + ID4_2, true);
+
+                    // XMLHTTP-Request senden.
+                    xhrP4.send();
+
+                    // Auf eine Antwort warten
+                    xhrP4.onreadystatechange = function() {
+
+                        Player4BestELO = xhrP4.responseText;
+                        //Player4BestELO = Player4BestELO.replace('<p>','');
+                        // = Player4BestELO.replace('</p>','');
+
+                    }*/
+
+                    //----- GET BEST ELO -----//
+
 
                     //Spielzeit = document.getElementById("stopwatch").textContent;
 
@@ -1302,6 +1531,100 @@ if ($erg2 = $db->query($sql2)) {
                     Player2ELO_new = Player2ELO + Math.round((T1ELO_new - T1ELO) /2);
                     Player3ELO_new = Player3ELO + Math.round((T2ELO_new - T2ELO) /2);
                     Player4ELO_new = Player4ELO + Math.round((T2ELO_new - T2ELO) /2);
+                    /* ----- UPDATE IF NEW ELO HIGH ----- */
+
+                    /*alert(Player1BestELO);
+                    alert(Player1ELO_new);
+                    if(Player1ELO_new > Player1BestELO )
+                    {
+
+                        alert(Player1BestELO);
+                        $.ajax({
+                            type: "POST",
+                            url: 'updateElohigh.php',
+                            data:{
+                                playerelo_new: 2000,
+                                playerid:Player1_ID
+
+
+                            },
+                            success: function(data){
+
+                            },
+
+
+                            error:function(){
+
+                                alert("es ist ein Fehler beim aktualisieren des ELO Höchstwert aufgetreten (Player 1)");
+                            }
+                        });
+                    }
+
+                    if(Player2ELO_new > Player2BestELO )
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: 'updateElohigh.php',
+                            data:{
+                                playerelo_new: Player2ELO_new,
+                                playerid:Player2_ID
+
+                            },
+                            success: function(data){
+
+                            },
+
+
+                            error:function(){
+
+                                alert("es ist ein Fehler beim aktualisieren des ELO Höchstwert aufgetreten (Player 2)");
+                            }
+                        });
+                    }
+
+                    if(Player3ELO_new > Player3BestELO)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: 'updateElohigh.php',
+                            data:{
+                                playerelo_new: Player3ELO_new,
+                                playerid:Player3_ID
+                            },
+                            success: function(data){
+
+                            },
+
+
+                            error:function(){
+
+                                alert("es ist ein Fehler beim aktualisieren des ELO Höchstwert aufgetreten (Player 3)");
+                            }
+                        });
+                    }
+
+                    if(Player4ELO_new > Player4BestELO)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: 'updateElohigh.php',
+                            data:{
+                                playerelo_new: Player4ELO_new,
+                                playerid:Player4_ID
+                            },
+                            success: function(data){
+
+                            },
+
+
+                            error:function(){
+
+                                alert("es ist ein Fehler beim aktualisieren des ELO Höchstwert aufgetreten (Player 4)");
+                            }
+                        });
+                    }*/
+
+
 
 
 

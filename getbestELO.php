@@ -2,7 +2,7 @@
 
 //**this file get the ELO from one Player the Database**//
 // Überprüfen ob über GET gesendet wurde.
-if (isset($_GET["ELOP2_1"])) {
+if (isset($_GET["ELObest"])) {
 
     // Den Zeichensatz über header() senden,
     // sonst werden Umlaute ggf. nicht richtig angezeigt.
@@ -12,12 +12,12 @@ if (isset($_GET["ELOP2_1"])) {
     $verbindung = new PDO("mysql:host=localhost;dbname=goatpong", "root", "root");
 
     // Anweisung definieren
-    $kommando = $verbindung->prepare("SELECT `ELO`
+    $kommando = $verbindung->prepare("SELECT `BestELO`
                                    FROM `player`
-                                   WHERE `ID` =  :ELOP2_1");
+                                   WHERE `ID` =  :ELObest");
 
     // Den Platzhalter in der Anweisung mit dem Suchbegriff ersetzen
-    $kommando->bindValue(':ELOP2_1', $_GET["ELOP2_1"]);
+    $kommando->bindValue(':ELObest', $_GET["ELObest"]);
 
 
     // Die vorbereitete Anweisung ausführen
@@ -31,7 +31,7 @@ if (isset($_GET["ELOP2_1"])) {
 
         // Alle gefundenen Datensätze ausgeben
         foreach ($datensaetze as $datensatz) {
-            echo '<p>' .$datensatz->ELO.'</p>';
+            echo '<p>' .$datensatz->BestELO.'</p>';
         }
     }
     else {

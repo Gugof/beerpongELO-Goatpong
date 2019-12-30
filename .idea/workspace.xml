@@ -13,6 +13,9 @@
       <executable />
     </execution>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1UcS1pCkWu4fVP16MHLKTI7LLX2" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -47,10 +50,30 @@
       <option name="presentableId" value="Default" />
       <updated>1575654178010</updated>
       <workItem from="1575654179097" duration="1404000" />
+      <workItem from="1576432334433" duration="351000" />
+      <workItem from="1576432763733" duration="868000" />
+      <workItem from="1576684095754" duration="8522000" />
+      <workItem from="1576696867083" duration="2569000" />
+      <workItem from="1576864817161" duration="242000" />
+      <workItem from="1576945802751" duration="447000" />
+      <workItem from="1577719796095" duration="1249000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

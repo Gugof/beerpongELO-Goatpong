@@ -1,4 +1,6 @@
-<?php 
+<?php
+    error_reporting(-1);
+    ini_set('display_errors', 1);
     if(isset($_POST)) 
 	{
 
@@ -24,7 +26,7 @@
 		}
 
 
-        $sql = "Update Player Set ELO = '$playerelo_new', Games = Games + 1, Win = Win + '$win' , Treffer = Treffer + '$treffer1', Gegentreffer = Gegentreffer + '$treffer2' WHERE ID = '$playerid'   ";
+        $sql = "Update player Set ELO = '$playerelo_new', Games = Games + 1, Win = Win + '$win' , Treffer = Treffer + '$treffer1', Gegentreffer = Gegentreffer + '$treffer2', BestELO = IF('$playerelo_new'>BestELO,'$playerelo_new',BestELO) WHERE ID = '$playerid'   ";
 
 
         if ($conn->query($sql) === TRUE) {

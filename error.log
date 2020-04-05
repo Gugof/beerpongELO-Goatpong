@@ -1,0 +1,20 @@
+[Sat Mar 28 22:47:04.919528 2020] [mpm_event:notice] [pid 2170:tid 1995788816] AH00489: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 22:47:04.920177 2020] [core:notice] [pid 2170:tid 1995788816] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 22:55:41.531067 2020] [mpm_event:notice] [pid 2170:tid 1995788816] AH00491: caught SIGTERM, shutting down
+[Sat Mar 28 22:55:51.897619 2020] [mpm_event:notice] [pid 481:tid 1996255760] AH00489: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 22:55:51.904432 2020] [core:notice] [pid 481:tid 1996255760] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 23:00:26.675116 2020] [mpm_event:notice] [pid 481:tid 1996255760] AH00491: caught SIGTERM, shutting down
+[Sat Mar 28 23:00:38.078149 2020] [mpm_event:notice] [pid 488:tid 1996280336] AH00489: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 23:00:38.180849 2020] [core:notice] [pid 488:tid 1996280336] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 23:18:20.881414 2020] [mpm_event:notice] [pid 488:tid 1996280336] AH00491: caught SIGTERM, shutting down
+[Sat Mar 28 23:18:36.039751 2020] [mpm_event:notice] [pid 511:tid 1995645456] AH00489: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 23:18:36.044829 2020] [core:notice] [pid 511:tid 1995645456] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 23:21:36.310994 2020] [mpm_event:notice] [pid 511:tid 1995645456] AH00491: caught SIGTERM, shutting down
+[Sat Mar 28 23:21:48.627908 2020] [mpm_event:notice] [pid 507:tid 1996288528] AH00489: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 23:21:48.630663 2020] [core:notice] [pid 507:tid 1996288528] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 23:40:42.255923 2020] [mpm_event:notice] [pid 507:tid 1996288528] AH00491: caught SIGTERM, shutting down
+[Sat Mar 28 23:40:42.436680 2020] [mpm_prefork:notice] [pid 4240] AH00163: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 23:40:42.437140 2020] [core:notice] [pid 4240] AH00094: Command line: '/usr/sbin/apache2'
+[Sat Mar 28 23:40:43.893399 2020] [mpm_prefork:notice] [pid 4240] AH00169: caught SIGTERM, shutting down
+[Sat Mar 28 23:40:44.174803 2020] [mpm_prefork:notice] [pid 4295] AH00163: Apache/2.4.38 (Raspbian) configured -- resuming normal operations
+[Sat Mar 28 23:40:44.175031 2020] [core:notice] [pid 4295] AH00094: Command line: '/usr/sbin/apache2'

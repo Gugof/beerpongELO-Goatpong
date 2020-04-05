@@ -2,7 +2,7 @@
 
 //**this file get the ELO from one Player the Database**//
 // Überprüfen ob über GET gesendet wurde.
-if (isset($_GET["ELObest"])) {
+if (isset($_GET["PlayerID"])) {
 
     // Den Zeichensatz über header() senden,
     // sonst werden Umlaute ggf. nicht richtig angezeigt.
@@ -14,10 +14,10 @@ if (isset($_GET["ELObest"])) {
     // Anweisung definieren
     $kommando = $verbindung->prepare("SELECT `BestELO`
                                    FROM `player`
-                                   WHERE `ID` =  :ELObest");
+                                   WHERE `ID` =  :PlayerID");
 
     // Den Platzhalter in der Anweisung mit dem Suchbegriff ersetzen
-    $kommando->bindValue(':ELObest', $_GET["ELObest"]);
+    $kommando->bindValue(':PlayerID', $_GET["PlayerID"]);
 
 
     // Die vorbereitete Anweisung ausführen
@@ -31,7 +31,7 @@ if (isset($_GET["ELObest"])) {
 
         // Alle gefundenen Datensätze ausgeben
         foreach ($datensaetze as $datensatz) {
-            echo '<p>' .$datensatz->BestELO.'</p>';
+            echo $datensatz->BestELO;
         }
     }
     else {
